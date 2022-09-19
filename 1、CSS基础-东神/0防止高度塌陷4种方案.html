@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="text-align: center;">
+        <div>正常文档流</div>
+        <div class="father"> 
+            <div class="con">父元素文档流</div>
+            <div class="left">左</div>
+            <div class="right">右</div>
+            <div class="fotter">Fotter</div>
+        </div>
+    </div>
+
+    <h1 style="text-align: center;">CSS面试高频题合集--防止高度塌陷4种方案</h1>
+    <h2 style="text-align: center;">1、防止高度塌陷4种方案</h2>
+    <div>
+        (1)方案一:为父元素设置overflow:hidden属性。<br/>
+        • 原理: CSS中的overflow :hidden属性会强制要求父元素必须包裹住所
+        有内部浮动的元素，以及所有元素的margin范围。<br/>
+        • 缺点: 如果刚好父元素有些超范围的子元素内容需要显示(比如，个
+        别position定位的子菜单项)，不想隐藏，就会发生冲突。
+    </div>
+    <div class="father" style="overflow: hidden;"> 
+        <div class="con">父元素文档流| （1）给父元素增加overflow: hidden</div>
+        <div class="left" style="float: left;">左</div>
+        <div class="right" style="float: right;">右</div>
+        <div class="fotter">Fotter</div>
+    </div>
+
+    <div>
+        (2)方案二:在父元素内的结尾追加一个空子元素（块级元素），并设置空子元素清除浮动影响（clear:both）。<br/>
+        • 原理:  利用clear:both属性和父元素必须包含非浮动的元素两个原理。<br/>
+        • 缺点:  无端多出一个无意义的看不见的空元素，影响选择器和查找元素。
+    </div>
+    <div class="father"> 
+        <div class="con">父元素文档流| （2）在父元素内的结尾追加一个空子元素（块级元素），并给空元素设置(clear:both）</div>
+        <div class="left" style="float: left;">左</div>
+        <div class="right" style="float: right;">右</div>
+        <div class="fotter">Fotter</div>
+        <div style="clear: both;"></div>
+    </div>
+
+    <div>
+        （3）方案三: 设置父元素也浮动。<br/>
+        • 原理:  浮动属性也会强制父元素扩大到包含所有浮动的内部元素。<br/>
+        • 缺点:  会产生新的浮动影响。比如，父元素浮动，导致父元素之后平级的页脚div上移，被父元素挡住了 <br/>
+        • 解决: 设置父元素之后的平级元素清除浮动（clear:both）
+    </div>
+    <div class="father" style="float: left;"> 
+        <div class="con">父元素文档流| （3）设置父元素也浮动；但会产生新的浮动影响</div>
+        <div class="left" style="float: left;">左</div>
+        <div class="right" style="float: right;">右</div>
+        <div class="fotter" style="clear: both;">Fotter</div>
+    </div>
+    <br/>
+
+    <div>
+        （4）方案四: 完美解决方案-- 为父元素末尾--伪元素设置clear:both。<br/>
+        • 优点: 既不会影响显示隐藏，又不会影响查找元素，又不会产生新的浮动问题 <br/>
+        • 问题：个别浏览器，display:table，可能带默认高度
+        • 保险起见: 再加一个属性height:0px
+    </div>
+    <div class="father"> 
+        <!-- .father::after{
+            content: '';
+            clear: both;
+            height: 0;
+            display: block; //display: table; 
+        } -->
+        <div class="con">父元素文档流| （4）为父元素末尾伪元素设置clear:both</div>
+        <div class="left" style="float: left;">左</div>
+        <div class="right" style="float: right;">右</div>
+        <div class="fotter">Fotter</div>
+    </div>
+
+    <h1>为什么overflow和float会强制父元素包裹浮动的子元素？ 接下来介绍-BFC</h1>
+    
+
+    <!-- <h1>2、防止margin合并和溢出</h1> -->
+
+
+
+    <!-- <h1>3、左边固定&右边自适应</h1> -->
+</body>
+<style>
+    .father{
+        border:2px solid #000;width: 400px; margin: 20px 0;
+    }
+    .father::after{
+        content: '';
+        clear: both;
+        height: 0;
+        display: block;
+        /* display: table; */
+        
+    }
+    .con{
+        background-color: aquamarine;
+    }
+    .left{
+        width: 200px;height:100px; background-color: yellow;margin-top: 5px;
+    }
+    .right{
+        width: 100px;height:200px; background-color: blueviolet;
+    }
+    .fotter{
+        background-color: pink;
+    }
+</style>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            text-align: center;
+        }
+        .con{
+               width:300px;
+               height:200px;
+               background-color:gold;
+               /* overflow:hidden  第1种方法-解决溢出*/ 
+               /* border: 5px solid pink; 第2种方法-解决溢出*/
+        }
+       .box {
+               width:100px;
+               height:100px;
+               background-color:green;
+                /* padding-top:50px; 第3种方法解决溢出 */
+               margin-top:100px; /* 相对于con溢出了，不是在con内部距离 */
+        }
+    </style>
+</head>
+<body>
+    <div>CSS面试高频题合集-----BFC</div>
+    <div style="background-color: pink;text-align: left;">
+        <h1>1、哪4种情况会形成BFC渲染区域</h1>
+        <div>
+            • float的值不是none <br>
+            • position的值不是static或者relative。 <br>
+            • display的值是inline-block、table-cell、flex、table-caption或者 inline-flex <br>
+            • overflow的值不是visible <br>
+        </div>
+    </div>
+    
+
+    <div  style="background-color: yellow;text-align: left;">
+        <h1>2、解决垂直方向margin合并</h1>
+        <div>
+        总结: 解决垂直方向margin合并<br>
+        • Step1: 添加父元素包裹下方元素 <br>
+        • Step2:  <br>
+            • 父元素overflow:hidden <br>
+            • 父元素下第一个子元素前添加空table标签    <br>
+            • 父元素padding代替子元素margin <br>
+            • 父元素+透明上边框 <br>
+            • 父元素::before{ content:””; display:table } <br>
+        </div>
+   </div>
+
+    <div style="background-color: pink;text-align: left;">
+        <h1>3、解决垂直方向margin溢出</h1>
+        <div>
+            总结: 解决垂直方向margin溢出 <br>
+                • 父元素overflow:hidden <br>
+                • 父元素下第一个子元素前添加空的table标签 <br>
+                • 父元素padding代替子元素margin <br>
+                • 父元素+透明上边框 <br>
+                • 父元素::before{ content:””; display:table } <br>
+        </div>
+        <div class="con">
+            <div class="box"></div>
+        </div>
+    </div>
+
+
+    <div  style="background-color: bisque;text-align: left;">
+        <h1>4、左边固定宽度，右边自适应</h1>
+        <div>
+            总结: 左定宽，右自适应布局 <br>
+            • Step1: 左: float:left <br>
+            • Step2: 右: 右overflow:hidden <br>
+        </div>
+    </div>
+
+</body>
+</html>

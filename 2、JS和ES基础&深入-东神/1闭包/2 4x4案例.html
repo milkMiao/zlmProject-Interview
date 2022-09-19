@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #container{
+            width: 200px;
+            height: 200px;
+            border-radius: 5px;
+            background-color: blueviolet;
+        }
+        #container>div{
+            width: 40px;
+            height: 40px;
+            background-color:#fff ;
+            margin-top: 8px;
+            margin-left: 8px;
+            float: left;
+            border-radius: 4px;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        动态生成4*4表格，每个表格中有坐标（0，0）-（3，3）点击表格增加次数，且每个表格互不干扰(闭包！！！)，次数通过弹框显示<br/>
+        1、先做静态页面,16个空的div
+    </div>
+    <div id="container">
+        <!-- 改为动态创建，如下 -->
+        <!-- <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div> -->
+    </div>
+   <script>
+       (function(){
+            var arr = [
+            [0,0,0,0],
+            [0,0,0,0],
+            [0,0,0,0],
+            [0,0,0,0]
+            ]
+            //2、动态为id=container，添加16个子div
+            var div = document.getElementById('container')
+            for(var r=0; r<4;r++){//控制外层循环
+                for(var c=0; c<4;c++){//控制内层循环
+                    var cell = document.createElement('div')
+                    cell.innerHTML=`(${r}, ${c})`
+                    div.appendChild(cell)
+                    
+                    //方案1:直接给每个盒子添加单击事件函数，每个处理函数来自于一个闭包的外层函数调用的返回值，
+                    //且闭包保存一个变量n，记录当前格子的点击次数；
+                    //cell.onclick得到的是：外层函数自调，返回内层函数对象，其中牢牢得到一个n变量值
+                    // cell.onclick = (function(){//匿名函数自调用
+                    //     var n =0; //
+                    //     return function(){
+                    //         n++;
+                    //         alert(`点击${n}次数`)
+                    //     }
+                    // })()
+                    
+
+                    //方案2：针对此题没什么问题，如果是2048小游戏就远远不行了，方块与方块直接屏蔽了-不能实现两个方块数据交互
+                    // 只要看到二维的布局，2048或者消消乐，都应该用二维数组来存储所有格子的值，
+                    // 每个按钮的单击事件处理函数中，应该只保存自己对应的下标位置，点击时通过保存自己的行列号，来找到二维数组中自己对应的元素值；
+                    cell.onclick = (function(r,c){ //妈妈
+                    return function(){ //孩子
+                            arr[r][c]++;
+                            alert(`点击${arr[r][c]}次数`)
+                    }
+                    })(r, c) //将外层循环中的r，c参数，传入妈妈函数中，保存到妈妈函数的局部变量r和c中
+                    //注意：当arr[1][2] = 100，那我们点击的时候，就会弹出101次，这样的全局变量很恐怖的，万一被别人窜改程序就崩溃了
+                    //缺点：arr是全局变量，可以随意修改其arr值
+
+
+                    //方案3: 匿名函数自调用，包裹整段代码！！！arr就成了局部变量，就会被内层函数引用着，不会释放！但外部也不能擅自修改；
+                    //改造一下？不能随便修改arr的值，那么就想到了匿名函数自执行；---所有代码(function(){...})()
+                    // arr访问，会报错：ncaught ReferenceError: arr is not defined
+                }
+            }
+        })()
+       </script>
+   
+</body>
+</html>

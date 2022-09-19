@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>fun(n,o)_1 ，此类型题--学会画图</div>
+    <script>
+    //题目
+        // function fun(n, o){
+        //     console.log(o); 
+        //     return {
+        //         fun:function(m){
+        //             return fun(m,n)
+        //         }
+        //     }
+        // }
+        // var a=fun(0);  //undefined
+        //     a.fun(1); //0
+        //     a.fun(2); //0
+        //     a.fun(3); //0
+
+        // var b=fun(0)
+        //       .fun(1)
+        //       .fun(2)
+        //       .fun(3)
+
+        // var c=fun(0).fun(1);
+        //     c.fun(2);
+        //     c.fun(3);
+
+
+    //解答步骤：
+        //fun全局函数，随处可调用
+        function fun(n, o){
+            console.log(o); //输出第二个参数值
+            return { //全部
+                fun:function(m){ 
+                    return fun(m,n) //只把第一个参数传递给孩子
+                }
+            }
+        }
+
+        var a=fun(0); //n->0,o->undefined 打印o---此时就输出了undefined
+        var a= {
+            fun: function(m){ //对象a肚子里的fun
+                return fun(m,n)//n->0 //全局的fun
+            }
+        }
+        // return {  如上等价
+        //     fun:function(m){ //对象a肚子里的fun
+        //         return fun(m,n)//n->0 //全局的fun
+        //     }
+        // }
+
+
+        //此类型题--学会画图！！！！
+        // var a=fun(0);  //undefined
+        //     a.fun(1);  //return fun(1,0)==>  fun前面什么都没加，默认从全局查找--即妈妈；打印：0 无var【此时妈妈又生了一个孩子，虽然生了，但没有参数接-没人要，所以又释放了】
+        //     a.fun(2);  //同上，打印：0
+        //     a.fun(3);  //同上，打印：0
+
+        // var b=fun(0)
+        //       .fun(1)
+        //       .fun(2)
+        //       .fun(3)
+        // var c=fun(0).fun(1);
+        //     c.fun(2);
+        //     c.fun(3);
+    </script>
+</body>
+</html>

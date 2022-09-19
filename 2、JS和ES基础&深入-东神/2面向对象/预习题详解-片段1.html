@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>预习视频讲解分析1---环境变量---东神老师</h1>
+    <div>
+
+    </div>
+    <script>
+        var a=2;
+        var obj={
+            a: 4,
+            fn1: (function(){ //匿名函数自调用，注意这里的this指向 window
+                this.a*= 2; //这里的this指向window
+                var a=3;
+                return function(){
+                    this.a*= 2;
+                    a*=3;
+                    console.log(a);
+                }
+            })()
+        }
+        var fn1 = obj.fn1;
+
+        //考察点：区分window全局变量a，和闭包里面的局部变量a
+        //三个全局变量：windows下   a=2，obj，fn1
+        console.log(a);//4
+        fn1(); //9
+        obj.fn1();//27
+        console.log(a)//8
+        console.log(obj.a)//8
+
+        //打印：4，9，27，8，8
+    </script>
+</body>
+</html>

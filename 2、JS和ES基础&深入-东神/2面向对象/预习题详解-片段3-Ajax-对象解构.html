@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>预习视频讲解分析3--对象解构 ---东神老师</h1>
+    <script>
+        //1、多属性
+        // var date = [2019,5,5]
+        // var y= date[0]
+        // var m= date[1]
+        // var d= date[2]
+        // var [y,m,d]=date
+
+        // 2、对象解构；属性对属性
+
+        //3、参数结构：再向函数传参时，将一个大对象，打散，传递给形参变量
+        // 何时使用？多个形参不确定 && 按顺序传递
+        // (1)默认值--只能应对，结尾一个参数不确定时；
+        // (2)剩余参数--虽然可以应对多个参数不确定情况，无法规定传递参数的顺序；
+        //    cal(name, base基础工资, 房补， 高温补贴，饭补 ) 三个函数的顺序怎么调整，才能使得下面三句都能执行？
+        //    cal("lilei", 10000, 600, , 200)
+        //   cal("hmm",    6000, , , 200)
+        //总结：多个形参都不确定时，并且每个实参数-都要传递给形参
+
+        //传入可用剩余参数方式收集
+        //为什么？
+        //arguments: 2大缺点
+        //1、不是纯正的数组类型对象，数组家的API一个都不能用；
+        //2、只能收集所有参数值，无法有选择的收集部分参数值；
+
+        //如何：2步
+        //1、在定义函数时，在可以确定的形参后添加 '...数组名'
+        //2、在函数内，‘数组名’数组中，自动收集了除已经确定的形参外剩余的实参值；
+
+        //解决：参数结构
+        //如何：2步
+        //1、定义形参时，所有的形参变量，都要定义在一个对象结构中；
+        // 等价书写方式： ajax({url, type, data, dataType}){...}
+        function ajax({ //与顺序无关---形参
+            url: url,
+            type: type,
+            data: data,//不确定有无，无的时候不会报错，而是默认传递undefined（访问对象属性没有值的时候，就是默认undefined）
+            dataType:dataType //不确定有无,json
+        }){
+            console.log(`向${url}发送${type}请求`);
+            if(data !== undefined && type =='get'){
+                console.log(`在url结尾拼接参数？${data}`);
+            }
+            if(data !== undefined && type =='post'){
+                console.log(`xhr.send(${data})`);
+            }
+            if(dataType=='json'){
+                console.log(`JSON.parse(返回结果)`)
+            }
+        }
+        //2、调用函数穿参时，所实参值，都放在一个对象结构中整体传入；
+        ajax({ //与顺序无关----实参
+            url: "http://localhost:3000/products/getProductsByKeys",
+            type: "get",
+            data: "kw=macbook i5",
+            dataType:"json"
+        });
+        // 总结：参数解构，其实就是对象解构在传参时的应用；
+        //实参====赋值(对象解构)====给形参
+
+    </script>
+</body>
+</html>

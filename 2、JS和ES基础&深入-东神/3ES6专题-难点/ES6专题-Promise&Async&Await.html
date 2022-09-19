@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ES6专题----</h1>
+    <script>
+        function fn(){
+            console.log(1)
+        }
+        fn();
+        function fn(){
+            console.log(2)
+        }
+        fn();
+        //打印结果是：2，2 ？？？？
+        //听过var变量提升吧，那么这个就是声明提前
+
+        //等价如下：两个fn函数声明提前！！！
+        function fn(){
+            console.log(1)
+        }
+        function fn(){
+            console.log(2)
+        }
+        fn();//2
+        fn();//2
+        
+    </script>
+</body>
+</html>

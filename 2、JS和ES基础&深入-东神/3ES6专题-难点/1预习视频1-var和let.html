@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>预习视频--var和let分别放入循环里，打印结果怎么样？？？</h1>
+    <script>
+    //1、var循环题
+        for(var i=0; i<5; i++){
+            setTimeout(function(){
+                console.log("打印i值：", i)
+            },50) //换成0
+        }
+        //打印： 5，5，5，5，5
+        //注意：将50换成0，是不是打印结果就不一样了？打印结果还是：5，5，5，5，5 ？？？？
+        //解释：
+        // 1、主函数(第一次循环for-- i=0)，
+        // 2、回调函数-任务队列：定时器setTimeout，i=0的回调函数放入
+        //    注意：不是立即执行，等着主函数执行完(for循环完全)，再执行任务队列的(此时有5个回调函数---function)
+        
+        //总结：只要主线程函数中所有代码完成，才能从任务队列中取出函数，进入主线程执行；！！！
+
+    //2、let循环题
+        for(let i=0; i<5; i++){
+            setTimeout(function(){
+                console.log("打印i值：", i)
+            },50)
+        }
+        //打印：0，1，2，3，4
+        //注意：let相当于匿名函数自调！！！
+        //等价如下代码：
+        for(let i=0; i<5; i++){
+            //i形参局部变量---红包
+            (function(i){ //---妈妈
+                setTimeout(function(){ //---孩子，就是定时器里面的 function(){consle.log(i)}
+                    console.log(i)
+                },50)
+            })(i)//实参
+        }
+        //1、for循环里面的i，传递给自调函数作为参数
+        //2、自调用函数外部的i实参，传给自调函数内i形参，起到了函数外部的值传递到函数内----闭包
+    </script>
+</body>
+</html>

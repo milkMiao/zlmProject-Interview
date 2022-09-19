@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>判断一个对象是不是数组类型，一共几种方法？</h1>
+    <script>
+        //不正确的答案：typeof
+        var n=10, str='Hello', b=true, nu=null, un;
+        var f=function(){};
+        var obj1={}, obj2=[1,2,3],obj3=new Date();
+
+        console.log(
+            typeof(n),//number
+            typeof(str),//string
+            typeof(b),//boolean
+            typeof(nu),//object
+            typeof(un),//undefined
+
+            typeof(f),//function
+
+            typeof(obj1),//object  typeof但是不能判断具体属于哪种对象--详细类型
+            typeof(obj2),//object
+            typeof(obj3)//object
+        )
+    </script>
+</body>
+</html>

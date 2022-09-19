@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>btns---闭包的使用</h1>
+    <button>click me！！！</button>
+    <button>click me！！！</button>
+    <button>click me！！！</button>
+    <button>click me！！！</button>
+    <button>click me！！！</button>
+    <script>
+        //1、 鄙视题1---var 全局变量
+        //页面上5个完全相同的按钮，点击哪个按钮，让按钮弹出自己是第几个
+        var btns = document.getElementsByTagName('button')
+        // for(var i=0; i<btns.length; i++){ 
+        //     //遍历过程中，仅事件处理函数赋值给一个按钮的onclick属性，保存起来
+        //     //而不是调用函数！所以不会读函数中的内容，也不会读i
+        //     btns[i].onclick=function(){
+        //         alert(i)
+        //     }
+        // }
+        // console.log(i) 
+        //一般单击按钮，只能在循环结束后，程序结束后！
+        //此时单击按钮是，会自动调用按钮上提前保存的事件处理函数，
+        //执行alert(),此时才去找i，因为事件处理函数内，没有局部变量i，所以只能去全局找i用；
+
+
+
+        //2、点谁，就让谁打印，想办法让i的值留下来，留在函数内---闭包！！！
+        // 匿名函数自调
+        for(var i=0; i<btns.length; i++){ 
+            (function(i){ //循环几次，妈妈就调用几次；
+                // var i; 形参变量，相当于局部变量
+                btns = document.getElementsByTagName('button')
+                    btns[i].onclick=function(){ //每调用一次妈妈，孩子就创建几次；将本次传入的i值，放在局部变量中，包成红包给孩子专属使用；
+                        alert(i)
+                    }
+            })(i);//匿名函数调用时，也可以传递参数i，而原始类型传参，是复制副本的意思；
+            //将外部循环变量i的临时值，赋值给妈妈中的局部变量i，让孩子永久保存起来；
+        }
+
+        
+
+        //3、var改成let，let本质===》匿名函数自调！！！！ 
+        //   let和for循环在一起的奇怪反应！！！
+        for(let i=0; i<btns.length; i++){ 
+            // (function(){
+                btns[i].onclick=function(){
+                    alert(i)
+                }
+            // })(i)  //let和for循环在一起，会将i传递给传递给自调函数用！！！
+        }
+
+
+        //4、
+        for(var i=0; i<3; i++){
+            setTimeout(function(){//异步，回调函数；
+                console.log(i)
+            },50)
+        }
+        //打印：3，3，3
+        //将var换成let，就形成了闭包，就会打印：0，1，2
+    </script>
+</body>
+</html>

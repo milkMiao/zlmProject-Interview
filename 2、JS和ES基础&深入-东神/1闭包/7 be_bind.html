@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>be——bind 尝试用原生的call()，来模拟实现ES5的bind()</h1>
+    <script>
+        //bind：
+        function jisuan(base,bonus1,bonus2){
+            console.log(`${this.ename}的总工资是：${base+bonus1+bonus2}`)
+        }
+        var lilei = { ename: "Li Lei "}
+        jisuan.call(lilei , 10000, 200,200) //反复调用，费事费力
+        jisuan.call(lilei , 10000, 200,300)
+        jisuan.call(lilei , 10000, 200,400)
+
+        var jisuan2 = jisuan.bind(lilei) //永久绑定lilei，方便使用
+        jisuan2(10000, 200,200)
+        jisuan2(10000, 200,300)
+        jisuan2(10000, 200,400)
+
+        var hanmeimei = { ename: "Han Mei Mei" }
+
+        //1、编码
+        //应该在所有函数的原型对象中-添加自定义的bind函数
+        Function.prototype.bind = function(obj){
+            console.log(`调用自定义的bind()`)
+            //先获得将来调用bind()的.前的原函数，保存在一个局部变量中；
+            var fun =this; //this ->等于调用， 将来的function jisuan () { ... }
+            //获取arguments中除第一个obj之外的所有实参值，保存在数组中
+            //arr1截取的就是通过bind向提前绑定死的部分实参值
+            var arr1 = Array.prototype.slice.call(arguments,1) //等价：arguments.slice(1);
+            return function(){
+                // fun();
+
+                //在fun调用时，需永久将this替换成 obj
+                // fun.call(obj);
+
+                //将类数组对象的arguments复制为纯正的数组；
+                var arr = Array.prototype.slice(arguments) // 等价：arguments.slice()
+                //复制所有原数组中的所有元素，到新数组中
+
+                //尝试将提前给的arr1数组中的前部分实参值，和arguments中获取的后半部分实参值，合并为一个数组；
+                var arr2 = arr1.concate(arr) //arr2中包含的就是所有实参值的完整集合；
+                console.log(`arr2:${arr2}`) // arr2 = arr1 + arr组合一起
+                fun.apply(obj, arr2); //一个一个给
+            }
+        }
+        function fun(){}
+        var fun2 = fun.bind();
+        // fun2: function() { fun(); }
+        //将来调用函数.bind()时，this->先获得.bind前的原函数，this将原函数对象的地址保存在 局部变量fun里
+        //因为返回的内层函数中，使用了外层函数bind的局部变量fun，所以形成了闭包！！！
+        //这次返回的内层函数中，就永久包含了对原函数的调用语句；
+        //所以，调用返回的内层函数，等于调用原函数；
+        // var jisuan = jisuan.bind()
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>预习视频讲解分析2--Ajax封装---东神老师</h1>
+    <script>
+        //1、Get请求
+        var xhr = new XMLHttpRequest();
+        xhr.open("get","https://localhost:3000/index",true)
+        xhr.onreadystatechange = function(){
+            console.log("小黄人来了！！！")
+            console.log(xhr.readyState);
+            if(xhr.readyState ==4){
+                var result = xhr.responseText;
+                console.log(result)
+                result = JSON.parse(xhr.responseText)
+                console.log(result)
+            }
+        }
+        xhr.send();
+
+        //2、Post请求
+        var xhr = new XMLHttpRequest();
+        xhr.open("post","https://localhost:3000/users/siginin",true)
+        xhr.onreadystatechange = function(){
+            console.log("小黄人来电话啦！！！")
+            console.log(xhr.readyState);
+            if(xhr.readyState ==4){
+                var result = xhr.responseText;
+                console.log(result)
+                result = JSON.parse(xhr.responseText)
+                console.log(result)
+            }
+        }
+        //给post请求设置请求头，以及发送请求参数，，get请求就不需要这些操作；
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+        xhr.send("uname=dingding&upwd=123456");
+
+
+
+        //封装一个函数L：保存重用的代码，需要考虑哪些情况
+        //(1) 代码中所有不确定的，都定义形参变量；
+        //(2) 所有不一定执行的代码，都要加判断条件；
+        
+        //3、封装Ajax请求（区分--get，post等）
+        function ajax(type,url,callback, data){
+            //三个参数：
+            // type---不同请求类型  ， 
+            // url----请求目标服务器地址  ， 
+            // data----要发送的参数，要求必须是--"变量1=值1&变量2=值2..."，注意--不要带问号，且必须是字符串形式
+            // callback---回调函数,调用者自调用的函数，会在ajax调用时提前传入ajax函数内部，
+            //            不是立刻执行，而是等响应回来之后自动执行；
+            //            onreadystatechange这内部编码的--这里的代码都是响应之后才能执行；
+
+            //强调：回调函数总是需要的，因为响应结果都需要处理；
+            //     不是所有请求都带参数，所以data有时候有，有时候没有--undefined；
+            //     凡事有可能有，又有可能没有-就放在形参列表的结尾；因为函数调用，形参中间是不能缺少参数的--编译错误；
+            // ajax(type, url, callback )  --缺少第四个参数data，那么默认传递undefined；
+            // ajax(type, url, , callback) --中间缺少参数---导致编译报错；
+            var xhr = new XMLHttpRequest();//不变的！！！
+            //如果发送get请求时，带参数，则需要将参数通过？连接到url结尾
+            if(type=='get'&&data !== undefined){
+                url += "?" +data
+            }
+            xhr.open(type,url,true)
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState ==4){
+                    //响应回来的信息
+                    var result = JSON.parse(xhr.responseText)
+                    //缺少一段自定义的代码来对result执行不同的操作；
+                    //今后只要一段代码不确定，也可以通过形参变量来解决；只不过这个变量将来传入的不是一个值，而是一个函数--callback;
+                    
+                    //相当于=====> callback: function(result){ console.log(result)}
+                    callback(result) //将result的结果，给上面的callback回调函数使用
+                    console.log(result)
+                }
+            }
+            //只有请求是post的时候，才需要添加请求头
+            if(type == 'post'){
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+            }
+            //只有post请求，才会将参数放在send()中发送，
+            // 也不是所有请求都有参数，所以也是一个【变量！！！】
+            if(type == 'post'){
+                xhr.send("uname=dingding&upwd=123456");
+            } else{ //get请求中，send()什么参数都没有
+                xhr.send()
+            }
+        }
+        
+        //调用封装好的ajax来请求接口数据
+        ajax(
+            "post", //type
+            "http://localhost:3000/users/sigin", //url
+            function(result){ //callback 要执行的自定义操作
+                console.log(result.msg)
+                document.write("欢迎登陆！"+result.uname)
+            },
+            "uname=dingding&upwd=123456"  //data
+        )
+    </script>
+</body>
+</html>

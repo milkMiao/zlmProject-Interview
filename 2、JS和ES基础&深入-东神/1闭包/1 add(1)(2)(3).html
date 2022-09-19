@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>add(1)(2)(3)案例--函数柯里化</h1>
+    </div>
+    <script>
+        //1、函数柯里化：可以连续给一个函数，反复传参，其中反复传的参数还能累计到函数内；
+        var add = function(x1){//妈妈
+            var sum=x1; //红包--先把第一个（）里的x1保存进局变量sum中；
+            var fun = function(x2){//孩子--定义内层函数，能够讲第二个（）中的x2。累加到变量sum中；
+                sum+=sum+x2; 
+                return fun;
+                //因为函数柯里化要求，能够连续给一个函数传参，所以，应该返回当前对象，才能继续调用，并传参；
+                //若返回sum，只能传递两个参数就结束了；
+            }
+            fun.toString = function(){//必须为fun函数定义toString()方法
+                // fun的toString()方法可以返回fun函数闭包中的sum变量现在的值；
+                return sum;
+            }
+            // fun.getSum = function(){
+            //     return sum;
+            // }
+            return fun; //可以传入第二个参数x2，add()也必须返回函数，才能继续调用，继续传参；
+        }
+        alert(add(1)(2)(3)) //6  注意：alert自动调用toString()
+        alert(add(2)(4)(6)) //12
+
+        //2、改为console的输出方式，怎么调整程序？
+        // console.log(add(1)(2)(3).getSum())
+
+        //3、复盘----需要画图理解【不明白，再观看视频教学】
+    </script>
+</body>
+</html>

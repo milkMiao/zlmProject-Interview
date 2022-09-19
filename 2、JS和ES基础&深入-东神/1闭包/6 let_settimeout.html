@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>let_settimeout</h1>
+    <script>
+        //50毫秒再快，也么有循环快
+        //let本质===》匿名函数自调！！！！ 
+        for(var i=0; i<3; i++){
+            setTimeout(function(){//异步，回调函数；只要函数不调用，就不去执行函数内容！！！
+                console.log(i)
+            },50)//50换成0，打印还是3，3，3
+        }
+        //打印：3，3，3
+        //将var换成let，就形成了闭包，就会打印：0，1，2
+
+        //主程序执行：for循环
+        //回调函数 等待队列：setTimeout0，setTimeout1，setTimeout2... 
+
+        //注意：主程序所有代码都执行完，才能从回掉函数中取函数，进入主线程执行；
+
+        //   let和for循环在一起的奇怪反应！！！
+         for(let i=0; i<3; i++){ 
+            // (function(){
+                setTimeout(function(){
+                    console.log(i) //alert(i) 会阻塞程序的执行；程序就会停在这，等待用户点击确认，才能接着执行！！！
+                },0)
+            // })(i)  //let和for循环在一起，会将i传递给传递给自调函数用！！！
+        }
+    </script>
+</body>
+</html>

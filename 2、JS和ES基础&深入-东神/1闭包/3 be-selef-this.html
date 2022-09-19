@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>be-self-this案例</div>
+    <script>
+        var name ='window'
+        var p={
+            name: 'Petter',
+            getName:function(){
+                var self = this;
+                return function(){
+                    return self.name;
+                }
+            }
+        }
+        var getName = p.getName()
+        var _name = getName();
+        console.log(_name); //Petter
+
+        //复盘总结--需画图理解；
+    </script>
+</body>
+</html>

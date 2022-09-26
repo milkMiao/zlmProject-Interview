@@ -1,0 +1,67 @@
+<div id="list">
+  <div>d1</div>
+  <div>d1</div>
+  <div>d1</div>
+</div>
+<script>
+  //   const list = {
+  //     array: ["a1", "a2"],
+  //     String: "Stirng",
+  //     Map: new Map([
+  //       [1, "m1"],
+  //       [2, "m2"],
+  //     ]),
+  //     Set: new Set(["s1", "s2"]),
+  //     NodeList: document.querySelector("#list").childNodes,
+  //   };
+  //   for (key in list) {
+  //     console.log(`=====${key}========`);
+  //     for (obj of list[key]) {
+  //         console.log(obj)
+  //     }
+  //   }
+
+  const list = {
+    a: 'aaaa',
+    b: 'bbbb',
+  };
+
+  const iterable = (obj) => {
+    // 添加iterator函数
+    obj[Symbol.iterator] = () => {
+      // 返回一个遍历器
+      const ary = Object.keys(obj);
+      let index = 0;
+      return {
+        next: function () {
+          if (index < ary.length) {
+            // 如果有下一个元素
+            // 返回本来元素
+            return {
+              done: false,
+              value: obj[ary[index++]],
+            };
+          } else {
+            // 没有 返回null
+            return {
+              done: true,
+              value: undefined,
+            };
+          }
+        },
+      };
+    };
+  };
+  iterable(list)
+
+  for (o of list) {
+    console.log(o);
+  }
+
+  const ary = [1,2,3]
+  const it = ary[Symbol.iterator]()
+  console.log(it.next())
+  console.log(it.next())
+  console.log(it.next())
+
+</script>

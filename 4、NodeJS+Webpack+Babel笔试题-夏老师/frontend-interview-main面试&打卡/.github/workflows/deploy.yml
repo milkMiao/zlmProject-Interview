@@ -1,0 +1,38 @@
+name: Deploy to Aliyun
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    # 下载代码
+    - uses: actions/checkout@v2
+    # 安装Nodejs
+    - name: Setup Node.js 14.4.0
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.4.0
+    # 安装依赖和编译
+    - name: Npm install
+      # 运行的命令或者 action
+      run: |
+        npm install
+    - name: Npm build
+      # 运行的命令或者 action
+      run: |
+        npm run build
+    # 部署到阿里云
+    - name: Deploy to Aliyun
+      uses: easingthemes/ssh-deploy@v2.1.1
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+        ARGS: "-avzr --delete"
+        SOURCE: "dist"
+        REMOTE_HOST: "47.98.252.43"
+        REMOTE_USER: "root"
+        TARGET: "/root/frontend-interview"

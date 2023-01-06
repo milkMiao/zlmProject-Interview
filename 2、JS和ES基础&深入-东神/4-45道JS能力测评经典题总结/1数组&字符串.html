@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2>1、常用数组方法</h2>
+        <ul>
+            <li><span>push:</span>向数组【末尾】添加一个or多个元素，并返回新的长度(也就是添加元素后的数组长度)；</li>
+            <li><span>pop:</span>用于删除并返回数组的【最后一个元素】，并返回删除的那个元素；</li>
+            <li><span>unshift:</span>向数组开头添加一个or多个元素，并返回新的长度；</li>
+            <li><span>shift:</span>删除原数组的【第一项】并返回删除元素的值；如果数组为空则返回undefined；</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>splice:</span>用于插入、删除、替换数组的元素；【注：会改变原始数组】<br>
+                参数1 index：必需。指定在什么位置添加/删除项目，使用负值指定从数组末尾开始的位置;<br>
+                参数2 howmany：可选。要删除的项目数。<br>
+                参数3 itemX：可选。要添加到数组中的新项目。<br>
+            </li>
+            <li><span>slice:</span>可以从已有的数组中返回选定的元素（对数组/字符串进行部分截取，并返回一个【数组副本】【注：不影响原数组】）；<br>
+                参数1 start：截取的开始数组索引；<br>
+                参数2 end：要取的最后一个字符的位置值加上1（可选）；<br>
+            </li>
+            <li><span>split: </span>把【字符串】分割成片段来创建一个字符串数组；【注：不影响原字符串】<br>
+                参数1 separator：空字符，会返回一个单字符的数组。<br>
+                参数2 limit：几份<br>
+            </li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>concat:</span>用于连接两个or多个数组；</li>
+            <li><span>join:</span>把【数组转换成字符串】，然后给他规定个连接字符，默认是逗号(,)</li>
+            <li><span>toString:</span>把【数组转换成字符串】，并返回结果</li>
+            <li><span>reverse:</span>颠倒数组中元素的顺序；</li>
+            <li><span>sort:</span>对数组中的元素进行排序（从小到大）</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>indexOf:</span>获取项在数组中的索引；</li>
+            <li><span>lastIndexOf:</span>返回获取项在数组中出现的最后一次索引；</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>forEach:</span>遍历数组，参数是一个匿名函数，默认返回undefined</li>
+            <li><span>map:</span>遍历数组，参数是一个匿名函数</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <h3>数组的归并方法</h3>
+            <li><span>reduce:</span>实现迭代数组所有项，然后构建一个最终的返回值。从数组开始，遍历到最后一项；<br>
+                <!-- 参数（上一个归并值(通过上一次调用回调函数获得的值)、当前项、当前项的索引和数组本身）。<br> -->
+                参数（数组每一项都要调用的函数，（可选的）作为归并基础的初始值）。<br>
+                传入这些方法中的函数会接收4个参数：前一个值、当前值、项的索引 和 数组对象。<br>
+            </li>
+            <li><span>reduceRight:</span>实现迭代数组所有项，然后构建一个最终的返回值。从数组最后一项开始，遍历到第一项；</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>some:</span>判断数组中是否存在满足条件的项，只要有一项满足，就会返回return；</li>
+            <li><span>every:</span>判断数组中每一项都是否满足条件，只有所有项都满足，才会返回return；</li>
+        </ul>
+    </div>
+    
+    <div>
+        <h2>2、常用字符串方法</h2>
+        <ul>
+            <li><span>charAt:</span>返回在指定位置的字符；</li>
+            <li><span>charCodeAt:</span>返回在指定位置的字符的 Unicode 编码；</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>concat:</span>连接字符串；</li>
+            <li><span>indexOf:</span>检索字符串；</li>
+            <li><span>search:</span>检索与正则表达式相匹配的值；</li>
+            <li><span>match:</span>找到一个or多个正则表达式的匹配；</li>
+            <li><span>replace:</span>替换与正则表达式的子串；</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>slice:</span>提取【字符串片段】，并在新的字符串中返回被提取的部分；</li>
+            <li><span>split:</span>把【字符串分割为字符串数组】；</li>
+            <li><span>substr:</span>从起始索引号提取字符串中 指定数目的字符；</li>
+            <li><span>substring:</span>提取字符串中两个指定的索引号之间的字符；</li>
+            <li>--------------------------------------------------------------------------------</li>
+            <li><span>toLocalLowerCase:</span>字符串转换小写；</li>
+            <li><span>toLocalUpperCase:</span>字符串转换大写；</li>
+            <li><span>toLowerCase:</span>字符串转换小写；</li>
+            <li><span>toUpperCase:</span>字符串转换大写；</li>
+        </ul>
+    </div>
+</body>
+<script src="./1数组&字符串方法.js"></script>
+<style>
+    ul li{line-height: 28px;}
+    ul li span{
+        width: 150px;
+        display: inline-block;
+    }
+</style>
+</html>

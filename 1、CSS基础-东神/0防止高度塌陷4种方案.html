@@ -32,7 +32,7 @@
         <div class="right" style="float: right;">右</div>
         <div class="fotter">Fotter</div>
     </div>
-
+    
     <div>
         (2)方案二:在父元素内的结尾追加一个空子元素（块级元素），并设置空子元素清除浮动影响（clear:both）。<br/>
         • 原理:  利用clear:both属性和父元素必须包含非浮动的元素两个原理。<br/>
@@ -45,7 +45,7 @@
         <div class="fotter">Fotter</div>
         <div style="clear: both;"></div>
     </div>
-
+    
     <div>
         （3）方案三: 设置父元素也浮动。<br/>
         • 原理:  浮动属性也会强制父元素扩大到包含所有浮动的内部元素。<br/>
@@ -59,7 +59,7 @@
         <div class="fotter" style="clear: both;">Fotter</div>
     </div>
     <br/>
-
+    
     <div>
         （4）方案四: 完美解决方案-- 为父元素末尾--伪元素设置clear:both。<br/>
         • 优点: 既不会影响显示隐藏，又不会影响查找元素，又不会产生新的浮动问题 <br/>
@@ -78,9 +78,9 @@
         <div class="right" style="float: right;">右</div>
         <div class="fotter">Fotter</div>
     </div>
-
-    <h1>为什么overflow和float会强制父元素包裹浮动的子元素？ 接下来介绍-BFC</h1>
     
+    <h1>为什么overflow和float会强制父元素包裹浮动的子元素？ 接下来介绍-BFC</h1>
+
 
     <!-- <h1>2、防止margin合并和溢出</h1> -->
 
@@ -98,7 +98,7 @@
         height: 0;
         display: block;
         /* display: table; */
-        
+
     }
     .con{
         background-color: aquamarine;

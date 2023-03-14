@@ -49,8 +49,10 @@
             // console.log('item----', index, item.dataset.original)
 
             if(item.dataset.original === "") return;
+
             rect = item.getBoundingClientRect(); //用于获取-页面某个元素左、上、右、下浏览器视图的位置；
-            console.log('rect----',index, rect)
+            // console.log('rect----',index, rect)
+            
             if(rect.bottom >=0 && rect.top < viewHeight){
                 !function(){
                     var img = new Image();
@@ -60,10 +62,11 @@
                     }
                     item.removeAttribute("data-original"); //移除属性，下次不遍历
                     item.removeAttribute("lazyload")
+                    console.log('image-----后', img)
                 }()
             }
         })
     }
-    lazyLoad();//刚开始还没滚动屏幕时，要先触发一次函数，初始化首页的页面图片
+    lazyLoad();//刚开始还没滚动屏幕时，要先触发一次函数，初始化首页的页面图片;
     document.addEventListener("scroll", lazyLoad)
 </script>

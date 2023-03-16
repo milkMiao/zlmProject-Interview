@@ -4,14 +4,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>懒加载学习</title>
+    <title>懒加载--预加载 PK 虚拟列表 PK 分片渲染</title>
 </head>
 <body>
-<!-- <h1>懒加载概念</h1>
+<!-- 
+    <h1>1、懒加载</h1>
      <div>1、也叫延迟加载，指的是在长网页中延迟加载图像，是一种很好优化网页性能的方式。</div>
      <div>2、用户滚动到它们之前，可视区域外的图像不会加载。</div> 
      <div>3、在某些情况下，它还可以帮助减少服务器负载。常适用图片很多，页面很长的电商网站场景中。</div>  
+
+    <h1>2、预加载</h1>
+    <div>资源预加载是另一个性能优化技术，
+        预加载简单来说就是[将所有所需的资源提前请求加载到本地]，这样后面在需要用到时就直接从缓存取资源。
+    </div>
+
+    <h1>3、虚拟列表</h1>
+    <div>虚拟列表其实是【按需显示的一种实现】，即只对可见区域进行渲染，
+        对非可见区域中的数据不渲染或部分渲染的技术，从而达到极高的渲染性能。
+    </div> 
+
+    <h1>4、分片渲染</h1>
+    <div>
+        简单的说就是一个执行完再执行下一个，其思想是建立一个队列，通过定时器来进行渲染，比如说一共有3次，
+        先把这三个放入到数组中，当第一个执行完成后，并剔除执行完成的，在执行第二个，直到全部执行完毕，渲染队列清空。
+    </div>
 -->
+
     <img src="" class="image-item" lazyload="true" data-original="./images/1.png" alt="1">
     <img src="" class="image-item" lazyload="true" data-original="./images/2.png" alt="2">
     <img src="" class="image-item" lazyload="true" data-original="./images/3.png" alt="3">
@@ -52,7 +70,6 @@
 
             rect = item.getBoundingClientRect(); //用于获取-页面某个元素左、上、右、下浏览器视图的位置；
             // console.log('rect----',index, rect)
-            
             if(rect.bottom >=0 && rect.top < viewHeight){
                 !function(){
                     var img = new Image();
